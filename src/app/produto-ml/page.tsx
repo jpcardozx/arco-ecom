@@ -25,8 +25,8 @@ import {
   ChevronRight,
   Play
 } from 'lucide-react';
-import { Button } from '@/components/design-system/primitives/button';
-import { Badge } from '@/components/design-system/primitives/badge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 // Dados do produto (simulado)

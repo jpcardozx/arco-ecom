@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/design-system/primitives/card';
-import { Badge } from '@/components/design-system/primitives/badge';
-import { Button } from '@/components/design-system/primitives/button';
-import { Input } from '@/components/design-system/primitives/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/design-system/primitives/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/design-system/primitives/tabs';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/design-system/primitives/table';
-import { Progress } from '@/components/design-system/primitives/progress';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Progress } from '@/components/ui/progress';
 import {
   DollarSign,
   TrendingUp,

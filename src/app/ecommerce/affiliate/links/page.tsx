@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/design-system/primitives/card';
-import { Badge } from '@/components/design-system/primitives/badge';
-import { Button } from '@/components/design-system/primitives/button';
-import { Input } from '@/components/design-system/primitives/input';
-import { Label } from '@/components/design-system/primitives/label';
-import { Textarea } from '@/components/design-system/primitives/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/design-system/primitives/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/design-system/primitives/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/design-system/primitives/dialog';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import {
   Link,
   Copy,
@@ -86,6 +86,7 @@ export default function AffiliateLinksPage() {
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
   const [customSlug, setCustomSlug] = useState('');
   const [campaign, setCampaign] = useState('');
+  const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   const generateLink = (productId: number) => {
     const product = products.find(p => p.id === productId);
@@ -94,6 +95,41 @@ export default function AffiliateLinksPage() {
     const slug = customSlug || product.name.toLowerCase().replace(/\s+/g, '-');
     const campaignParam = campaign ? `?utm_campaign=${campaign}` : '';
     return `arco.com/aff/ABC123/${slug}${campaignParam}`;
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopySuccess(text);
+      setTimeout(() => setCopySuccess(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const handleShare = async (product: any) => {
+    const shareData = {
+      title: product.name,
+      text: `Confira este produto incrível: ${product.name}`,
+      url: window.location.origin + `/product/${product.id}`
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      copyToClipboard(shareData.url);
+    }
+  };
+
+  const downloadQRCode = (productId: number) => {
+    // Simulate QR code download
+    const link = generateLink(productId);
+    console.log('Download QR Code for:', link);
+    // In a real implementation, you'd generate and download a QR code image
   };
 
   return (
@@ -163,7 +199,7 @@ export default function AffiliateLinksPage() {
                           readOnly
                           className="text-xs"
                         />
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" onClick={() => copyToClipboard(generateLink(selectedProduct))}>
                           <Copy className="w-4 h-4" />
                         </Button>
                       </div>
@@ -208,8 +244,18 @@ export default function AffiliateLinksPage() {
                 )}
               </div>
               <div className="flex gap-2">
-                <Button className="flex-1">Gerar e Salvar Link</Button>
-                <Button variant="outline">
+                <Button className="flex-1" onClick={() => {
+                  if (selectedProduct) {
+                    const link = generateLink(selectedProduct);
+                    copyToClipboard(link);
+                    console.log('Link gerado e salvo:', link);
+                  }
+                }}>Gerar e Salvar Link</Button>
+                <Button variant="outline" onClick={() => {
+                  if (selectedProduct) {
+                    downloadQRCode(selectedProduct);
+                  }
+                }}>
                   <QrCode className="w-4 h-4 mr-2" />
                   QR Code
                 </Button>
@@ -242,7 +288,10 @@ export default function AffiliateLinksPage() {
                   <SelectItem value="services">Serviços</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline">
+              <Button variant="outline" onClick={() => {
+                // Reset filters or implement filter functionality
+                console.log('Filter products');
+              }}>
                 <Filter className="w-4 h-4" />
               </Button>
             </div>
@@ -297,16 +346,20 @@ export default function AffiliateLinksPage() {
                               <div className="text-sm font-medium mb-2">Link Gerado:</div>
                               <div className="flex gap-2">
                                 <Input value={`arco.com/aff/ABC123/${product.name.toLowerCase().replace(/\s+/g, '-')}`} readOnly />
-                                <Button size="sm" variant="outline">
+                                <Button size="sm" variant="outline" onClick={() => copyToClipboard(`arco.com/aff/ABC123/${product.name.toLowerCase().replace(/\s+/g, '-')}`)}>
                                   <Copy className="w-4 h-4" />
                                 </Button>
                               </div>
                             </div>
-                            <Button className="w-full">Criar Link</Button>
+                            <Button className="w-full" onClick={() => {
+                              const link = `arco.com/aff/ABC123/${product.name.toLowerCase().replace(/\s+/g, '-')}`;
+                              copyToClipboard(link);
+                              console.log('Link criado:', link);
+                            }}>Criar Link</Button>
                           </div>
                         </DialogContent>
                       </Dialog>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => window.open(`/ecommerce/product/${product.id}`, '_blank')}>
                         <Eye className="w-4 h-4" />
                       </Button>
                     </div>
@@ -353,15 +406,15 @@ export default function AffiliateLinksPage() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-muted-foreground">Criado em {link.created}</span>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => copyToClipboard(link.url)}>
                           <Copy className="w-4 h-4 mr-1" />
                           Copiar
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleShare({ name: link.product, id: link.id })}>
                           <Share2 className="w-4 h-4 mr-1" />
                           Compartilhar
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => window.open(link.url, '_blank')}>
                           <ExternalLink className="w-4 h-4" />
                         </Button>
                       </div>
@@ -386,11 +439,19 @@ export default function AffiliateLinksPage() {
                   </div>
                   <CardContent className="p-4">
                     <div className="flex gap-2">
-                      <Button className="flex-1" size="sm">
+                      <Button className="flex-1" size="sm" onClick={() => {
+                        console.log('Download material:', material);
+                        // In a real app, this would trigger actual download
+                        alert(`Download de ${material} iniciado!`);
+                      }}>
                         <Download className="w-4 h-4 mr-1" />
                         Download
                       </Button>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" onClick={() => {
+                        console.log('Preview material:', material);
+                        // In a real app, this would open a preview modal
+                        alert(`Visualizando ${material}`);
+                      }}>
                         <Eye className="w-4 h-4" />
                       </Button>
                     </div>

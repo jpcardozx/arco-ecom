@@ -1,13 +1,20 @@
 /**
  * ARCO Supabase Client Configuration
- * Complete setup with products management and authentication
+ * Complete setup with products management, authentication and image storage
  */
 
-// import { createClient } from '@supabase/supabase-js';
-// import { Database } from '@/types/database';
+import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+// Validate Supabase credentials
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.warn('⚠️ Supabase URL and Anon Key are required. Check your .env.local file.');
+}
+
+// Create Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Product Types
 export interface Product {
@@ -218,9 +225,78 @@ export const linkParserService = {
   }
 };
 
-// Legacy exports for compatibility
-export const supabase = null as any;
-export const supabaseAdmin = null as any;
-export const auth = {} as any;
-export const db = {} as any;
-export default null as any;
+// Image Storage Service
+export const imageStorageService = {
+  /**
+   * Upload image to Supabase storage
+   */
+  async uploadImage(file: File | Blob, path: string): Promise<{ url: string; path: string }> {
+    if (!supabase) throw new Error('Supabase not initialized');
+    
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(path, file, {
+        upsert: true,
+        contentType: file instanceof File ? file.type : 'image/jpeg'
+      });
+
+    if (error) {
+      throw new Error(`Image upload failed: ${error.message}`);
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(path);
+
+    return {
+      url: publicUrl,
+      path: data.path
+    };
+  },
+
+  /**
+   * Upload image from URL (for scraped images)
+   */
+  async uploadImageFromUrl(imageUrl: string, fileName: string): Promise<{ url: string; path: string }> {
+    try {
+      // Fetch image
+      const response = await fetch(imageUrl);
+      if (!response.ok) throw new Error(`Failed to fetch image: ${response.statusText}`);
+      
+      const blob = await response.blob();
+      const extension = imageUrl.split('.').pop()?.split('?')[0] || 'jpg';
+      const path = `products/${fileName}.${extension}`;
+
+      return await this.uploadImage(blob, path);
+    } catch (error) {
+      console.error('Image upload from URL failed:', error);
+      // Return original URL if upload fails
+      return { url: imageUrl, path: imageUrl };
+    }
+  },
+
+  /**
+   * Delete image from storage
+   */
+  async deleteImage(path: string): Promise<void> {
+    if (!supabase) return;
+    
+    await supabase.storage
+      .from('product-images')
+      .remove([path]);
+  },
+
+  /**
+   * Generate optimized image path
+   */
+  generateImagePath(productId: string, imageType: 'main' | 'gallery', index: number = 0): string {
+    const timestamp = Date.now();
+    return `products/${productId}/${imageType}-${index}-${timestamp}`;
+  }
+};
+
+// Legacy exports for compatibility (deprecated)
+export const supabaseAdmin = supabase;
+export const auth = supabase?.auth;
+export const db = null; // Using MongoDB instead
+export default supabase;

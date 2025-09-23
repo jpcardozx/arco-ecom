@@ -4,7 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { sqliteService } from '@/lib/sqlite';
+import { mongodbService } from '@/lib/mongodb';
+import { getCurrentUser, isAdmin } from '@/lib/auth';
+import { auditLogService } from '@/lib/auditLog';
 import { z } from 'zod';
 
 // Validation schemas
@@ -78,7 +80,7 @@ export async function GET(request: NextRequest) {
       limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined,
     });
 
-    const products = sqliteService.getProducts(filters);
+    const products = await mongodbService.getProducts(filters);
     
     return NextResponse.json({
       success: true,
@@ -90,8 +92,13 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/products - Create new product
+// POST /api/products - Create new product (Admin only)
 export async function POST(request: NextRequest) {
+  const user = await getCurrentUser();
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+  }
+
   try {
     const body = await request.json();
     const validatedData = ProductSchema.parse(body);
@@ -106,7 +113,7 @@ export async function POST(request: NextRequest) {
       tags: validatedData.tags || [],
     };
     
-    const newProduct = sqliteService.addProduct(productData);
+    const newProduct = await mongodbService.addProduct(productData);
     
     if (!newProduct) {
       return NextResponse.json(
@@ -114,6 +121,13 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Log the admin action
+    await auditLogService.logAction({
+      user: user!,
+      action: 'CREATE_PRODUCT',
+      target: { id: newProduct.id, type: 'product' },
+    });
     
     return NextResponse.json({
       success: true,

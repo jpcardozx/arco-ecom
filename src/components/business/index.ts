@@ -3,11 +3,8 @@
  * Domain-specific components for marketing and business logic
  */
 
-// Sections
-export * from './sections';
+// Sections (removed during cleanup)
+// export * from './sections';
 
-// Layouts
-export * from './layouts';
-
-// Features
-export * from './features';
+// Export empty object to make this a valid module
+export {};

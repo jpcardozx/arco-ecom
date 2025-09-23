@@ -4,10 +4,9 @@
  */
 
 // Navigation
-export * from './navigation';
 
-// Hero Components
-export * from './hero';
+// Hero Components (removed during cleanup)
+// export * from './hero';
 
 // Footer
 export * from './footer';

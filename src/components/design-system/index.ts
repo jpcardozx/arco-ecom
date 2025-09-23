@@ -2,13 +2,10 @@
  * ARCO Design System - Hierarchical Component Architecture
  *
  * Design System Structure:
- * - primitives/  → Basic UI components (shadcn/ui)
+ * - primitives/  → Basic UI components (moved to @/components/ui)
  * - composed/    → Complex layout components
  * - tokens/      → Design tokens and utilities
  */
-
-// Primitive UI Components (shadcn/ui base)
-export * from './primitives';
 
 // Composed Layout Components
 export * from './composed';

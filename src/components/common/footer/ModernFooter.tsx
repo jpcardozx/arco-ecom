@@ -9,10 +9,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/design-system/primitives/button';
-import { Input } from '@/components/design-system/primitives/input';
-import { Separator } from '@/components/design-system/primitives/separator';
-import { Badge } from '@/components/design-system/primitives/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 import {
   Mail,
   Phone,
@@ -59,25 +59,25 @@ interface FooterProps {
 
 const footerSections: FooterSection[] = [
   {
-    title: 'Soluções',
+    title: 'Produtos',
     icon: TrendingUp,
     links: [
-      { label: 'Marketing Digital', href: '/services/marketing-digital' },
-      { label: 'Consultoria Elite', href: '/services/consultoria-elite', badge: 'Premium' },
-      { label: 'Diagnóstico IA', href: '/services/diagnostico-ia', badge: 'Novo' },
-      { label: 'Growth Hacking', href: '/services/growth-hacking' },
-      { label: 'Automação', href: '/services/automacao' },
-      { label: 'Todas as Soluções', href: '/services' }
+      { label: 'Eletrônicos', href: '/ecommerce?categoria=eletronicos' },
+      { label: 'Casa & Jardim', href: '/ecommerce?categoria=casa' },
+      { label: 'Moda & Beleza', href: '/ecommerce?categoria=moda' },
+      { label: 'Esportes & Lazer', href: '/ecommerce?categoria=esportes' },
+      { label: 'Ofertas Especiais', href: '/ecommerce?tab=ofertas', badge: 'Hot' },
+      { label: 'Ver Todos', href: '/ecommerce' }
     ]
   },
   {
     title: 'E-commerce',
     icon: Sparkles,
     links: [
-      { label: 'Shopping Center', href: '/ecommerce' },
-      { label: 'Programa de Afiliados', href: '/ecommerce/affiliate/signup', badge: 'S-Tier' },
-      { label: 'Dashboard Analytics', href: '/ecommerce/affiliate/dashboard' },
-      { label: 'Comissões', href: '/ecommerce/affiliate/commissions' },
+      { label: 'Catálogo Completo', href: '/ecommerce' },
+      { label: 'Meus Favoritos', href: '/ecommerce?tab=favoritos' },
+      { label: 'Ofertas do Dia', href: '/ecommerce/ofertas', badge: 'Novo' },
+      { label: 'Produtos Premium', href: '/ecommerce/premium' },
       { label: 'Links de Afiliado', href: '/ecommerce/affiliate/links' }
     ]
   },
@@ -171,10 +171,10 @@ export const ModernFooter: React.FC<FooterProps> = ({
                 viewport={{ once: true }}
               >
                 <h3 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  Fique à Frente da Concorrência
+                  Ofertas Exclusivas Para Você
                 </h3>
                 <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                  Receba insights exclusivos, estratégias de crescimento e tendências do mercado digital direto na sua caixa de entrada.
+                  Receba ofertas especiais, lançamentos de produtos e descontos exclusivos direto na sua caixa de entrada.
                 </p>
               </motion.div>
 
@@ -281,7 +281,7 @@ export const ModernFooter: React.FC<FooterProps> = ({
             </div>
             
             <p className="text-gray-300 text-lg leading-relaxed max-w-md">
-              Transformamos negócios através de estratégias de marketing digital inovadoras e tecnologia de ponta.
+              Produtos premium com qualidade garantida, entrega rápida e os melhores preços do mercado.
             </p>
 
             <div className="space-y-3">

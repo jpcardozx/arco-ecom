@@ -1,12 +1,14 @@
 /**
- * ARCO API - Individual Product Operations
+ * ARCO API - Individual Product Operations (MongoDB & Secured)
  * GET /api/products/[id] - Get single product
- * PUT /api/products/[id] - Update product
- * DELETE /api/products/[id] - Delete product
+ * PUT /api/products/[id] - Update product (Admin only)
+ * DELETE /api/products/[id] - Delete product (Admin only)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { sqliteService } from '@/lib/sqlite';
+import { mongodbService } from '@/lib/mongodb';
+import { getCurrentUser, isAdmin } from '@/lib/auth';
+import { auditLogService } from '@/lib/auditLog';
 import { z } from 'zod';
 
 // Validation schemas
@@ -65,8 +67,8 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const params = await context.params;
-    const product = sqliteService.getProductById(params.id);
+    const { id } = await context.params;
+    const product = await mongodbService.getProductById(id);
     
     if (!product) {
       return NextResponse.json(
@@ -84,26 +86,39 @@ export async function GET(
   }
 }
 
-// PUT /api/products/[id] - Update product
+// PUT /api/products/[id] - Update product (Admin only)
 export async function PUT(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  const user = await getCurrentUser();
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+  }
+
   try {
-    const params = await context.params;
+    const { id } = await context.params;
     const body = await request.json();
     const validatedData = ProductUpdateSchema.parse(body);
     
-    const success = sqliteService.updateProduct(params.id, validatedData);
+    const success = await mongodbService.updateProduct(id, validatedData);
     
     if (!success) {
       return NextResponse.json(
-        { error: 'Product not found' },
+        { error: 'Product not found or failed to update' },
         { status: 404 }
       );
     }
+
+    // Log the admin action
+    await auditLogService.logAction({
+      user: user!,
+      action: 'UPDATE_PRODUCT',
+      target: { id: id, type: 'product' },
+      changes: validatedData,
+    });
     
-    const updatedProduct = sqliteService.getProductById(params.id);
+    const updatedProduct = await mongodbService.getProductById(id);
     
     return NextResponse.json({
       success: true,
@@ -114,21 +129,33 @@ export async function PUT(
   }
 }
 
-// DELETE /api/products/[id] - Delete product
+// DELETE /api/products/[id] - Delete product (Admin only)
 export async function DELETE(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  const user = await getCurrentUser();
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+  }
+
   try {
-    const params = await context.params;
-    const success = sqliteService.deleteProduct(params.id);
+    const { id } = await context.params;
+    const success = await mongodbService.deleteProduct(id);
     
     if (!success) {
       return NextResponse.json(
-        { error: 'Product not found' },
+        { error: 'Product not found or failed to delete' },
         { status: 404 }
       );
     }
+
+    // Log the admin action
+    await auditLogService.logAction({
+      user: user!,
+      action: 'DELETE_PRODUCT',
+      target: { id: id, type: 'product' },
+    });
     
     return NextResponse.json({
       success: true,

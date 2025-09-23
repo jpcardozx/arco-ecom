@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { signIn } from 'next-auth/react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/design-system/primitives/card';
-import { Button } from '@/components/design-system/primitives/button';
-import { Badge } from '@/components/design-system/primitives/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Github,
   Shield,

@@ -3,132 +3,133 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/design-system/primitives/button';
-import { Badge } from '@/components/design-system/primitives/badge';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/design-system/primitives/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/design-system/primitives/sheet';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menu,
   ShoppingBag,
   Users,
   TrendingUp,
-  Zap,
   Crown,
   ArrowRight,
   Phone,
   Star,
-  X
+  X,
+  Truck,
+  Shield,
+  User,
+  LogIn
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Logo Component - Clean, only logo
+// Logo Component - Simplified and Clean
 const ArcoLogo = ({ className }: { className?: string }) => (
   <motion.div 
-    className={cn("flex items-center", className)}
-    whileHover={{ scale: 1.05 }}
-    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    className={cn("relative group", className)}
+    whileHover={{ scale: 1.02 }}
+    transition={{ type: "spring", stiffness: 400, damping: 25 }}
   >
-    <div className="relative group">
-      <motion.div 
-        className="w-12 h-12 relative"
-        whileHover={{ rotate: 5 }}
-        transition={{ type: "spring", stiffness: 300 }}
-      >
-        <Image
-          src="/logo-v2.svg"
-          alt="ARCO"
-          width={48}
-          height={48}
-          className="object-contain"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10" />
-      </motion.div>
-    </div>
+    <Image
+      src="/logo-v2.svg"
+      alt="ARCO"
+      width={40}
+      height={40}
+      className="object-contain drop-shadow-sm"
+      priority
+    />
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
   </motion.div>
 );
 
-// Navigation Items - Client Focused
+// Navigation Button Component - Eliminates Repetition
+const NavButton = ({ href, children, icon: Icon, variant = "ghost" }: {
+  href: string;
+  children: React.ReactNode;
+  icon: React.ComponentType<{ className?: string }>;
+  variant?: "ghost" | "default";
+}) => (
+  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+    <Button
+      variant={variant}
+      size="sm"
+      className={cn(
+        "font-semibold text-lg px-6 py-3 h-12 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg",
+        variant === "ghost" 
+          ? "text-gray-900 hover:bg-white/50 backdrop-blur-sm"
+          : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-xl hover:shadow-blue-500/30"
+      )}
+      asChild
+    >
+      <Link href={href} className="flex items-center gap-2">
+        <Icon className="w-4 h-4" />
+        {children}
+      </Link>
+    </Button>
+  </motion.div>
+);
+
+// Navigation Items - Customer Focused & Simplified
 const navigationItems = [
   {
-    title: 'Soluções',
-    badge: 'Premium',
+    title: 'Produtos',
     items: [
       {
-        title: 'Marketing Digital',
-        description: 'Estratégias avançadas de growth hacking',
-        href: '/#services',
-        icon: TrendingUp,
-        color: 'from-blue-500 to-cyan-500',
-        featured: true,
-      },
-      {
-        title: 'Consultoria Elite',
-        description: 'Consultoria 1:1 com experts certificados',
-        href: '/#pricing',
-        icon: Crown,
-        color: 'from-purple-500 to-pink-500',
-        featured: true,
-      },
-      {
-        title: 'Diagnóstico IA',
-        description: 'Análise completa com inteligência artificial',
-        href: '/#contact',
-        icon: Zap,
-        color: 'from-amber-500 to-orange-500',
-        badge: 'Novo',
-      },
-      {
-        title: 'Cases de Sucesso',
-        description: 'Resultados reais dos nossos clientes',
-        href: '/#results',
-        icon: Star,
-        color: 'from-green-500 to-emerald-500',
-      },
-    ],
-  },
-  {
-    title: 'E-commerce',
-    badge: 'Premium',
-    items: [
-      {
-        title: 'Loja Virtual Completa',
-        description: 'Plataforma e-commerce com IA integrada',
+        title: 'Catálogo Premium',
+        description: 'Produtos exclusivos com qualidade garantida',
         href: '/ecommerce',
         icon: ShoppingBag,
         color: 'from-emerald-500 to-teal-500',
         featured: true,
       },
       {
-        title: 'Automação de Vendas',
-        description: 'Funis automatizados que vendem 24/7',
-        href: '/ecommerce/automation',
-        icon: Zap,
-        color: 'from-blue-500 to-indigo-500',
+        title: 'Ofertas do Dia',
+        description: 'Descontos especiais por tempo limitado',
+        href: '/ecommerce/ofertas',
+        icon: Star,
+        color: 'from-amber-500 to-orange-500',
+        badge: 'Novo',
+      },
+      {
+        title: 'Mais Vendidos',
+        description: 'Produtos favoritos dos nossos clientes',
+        href: '/ecommerce/populares',
+        icon: TrendingUp,
+        color: 'from-slate-600 to-slate-500',
+      },
+    ],
+  },
+  {
+    title: 'Atendimento',
+    items: [
+      {
+        title: 'Sobre Nós',
+        description: 'Conheça nossa história e compromissos',
+        href: '/about',
+        icon: Users,
+        color: 'from-blue-500 to-blue-600',
         featured: true,
       },
       {
-        title: 'Analytics Avançado',
-        description: 'Dashboards inteligentes para otimização',
-        href: '/ecommerce/analytics',
-        icon: TrendingUp,
-        color: 'from-purple-500 to-pink-500',
-        badge: 'Pro',
+        title: 'Suporte ao Cliente',
+        description: 'Tire suas dúvidas sobre produtos e pedidos',
+        href: '/suporte',
+        icon: Phone,
+        color: 'from-green-500 to-green-600',
       },
       {
-        title: 'Consultoria 1:1',
-        description: 'Estratégia personalizada para seu negócio',
-        href: '/ecommerce/consulting',
-        icon: Users,
-        color: 'from-amber-500 to-orange-500',
+        title: 'Entrega e Devolução',
+        description: 'Informações sobre frete e política de troca',
+        href: '/politicas',
+        icon: Truck,
+        color: 'from-slate-600 to-slate-500',
+      },
+      {
+        title: 'Garantia',
+        description: 'Proteção completa para suas compras',
+        href: '/garantia',
+        icon: Shield,
+        color: 'from-green-500 to-emerald-500',
       },
     ],
   },
@@ -137,7 +138,6 @@ const navigationItems = [
 export const PremiumNavigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -147,140 +147,49 @@ export const PremiumNavigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const NavItem = ({ item }: { item: any }) => (
-    <motion.div
-      className="group"
-      whileHover={{ y: -2 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <Link
-        href={item.href}
-        className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:shadow-lg"
-      >
-        <div className={cn(
-          "p-2 rounded-lg transition-all duration-300 group-hover:scale-110 bg-gradient-to-br",
-          item.color || 'from-gray-500 to-gray-600'
-        )}>
-          <item.icon className="w-4 h-4 text-white" />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
-              {item.title}
-            </h4>
-            {item.badge && (
-              <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0">
-                {item.badge}
-              </Badge>
-            )}
-          </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {item.description}
-          </p>
-        </div>
-        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
-      </Link>
-    </motion.div>
-  );
 
   return (
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        background: isScrolled 
-          ? 'linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.25) 100%)'
-          : 'linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%)',
-        backdropFilter: 'blur(30px) saturate(200%)',
-        WebkitBackdropFilter: 'blur(30px) saturate(200%)',
-        borderBottom: '1px solid rgba(255,255,255,0.25)',
-        boxShadow: isScrolled ? '0 8px 32px rgba(0,0,0,0.12)' : '0 4px 16px rgba(0,0,0,0.08)',
+        background: isScrolled
+          ? 'linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.35) 100%)'
+          : 'linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.25) 100%)',
+        backdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+        WebkitBackdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+        borderBottom: isScrolled
+          ? '1px solid rgba(255,255,255,0.4)'
+          : '1px solid rgba(255,255,255,0.3)',
+        boxShadow: isScrolled
+          ? '0 8px 40px rgba(0,0,0,0.08), 0 2px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6)'
+          : '0 4px 24px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.5)',
       }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo - Clean and Simple */}
-          <Link href="/" className="flex-shrink-0">
-            <ArcoLogo />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-2">
-            <NavigationMenu>
-              <NavigationMenuList className="gap-2">
-                {navigationItems.map((section) => (
-                  <NavigationMenuItem key={section.title}>
-                    <NavigationMenuTrigger className={cn(
-                      "h-10 px-4 py-2 text-sm font-semibold transition-all duration-300",
-                      "bg-transparent hover:bg-white/40 text-gray-900 dark:text-white",
-                      "border-0 focus:border-0 focus:ring-0"
-                    )}>
-                      <span className="flex items-center gap-2">
-                        {section.title}
-                        {section.badge && (
-                          <Badge variant="outline" className="text-xs px-1.5 py-0 border-blue-400 text-blue-700 bg-white/70">
-                            {section.badge}
-                          </Badge>
-                        )}
-                      </span>
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent 
-                      className="min-w-[400px] p-6 border border-white/40 shadow-2xl"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%)',
-                        backdropFilter: 'blur(25px) saturate(180%)',
-                        WebkitBackdropFilter: 'blur(25px) saturate(180%)',
-                      }}
-                    >
-                      <div className="grid gap-3">
-                        <div className="flex items-center gap-2 mb-4">
-                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {section.title}
-                          </h3>
-                        </div>
-                        {section.items?.map((item) => (
-                          <NavItem key={item.title} item={item} />
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
+        <div className="flex items-center h-20">
+          {/* Logo - Left Side */}
+          <div className="flex-shrink-0 mr-8">
+            <Link href="/">
+              <ArcoLogo />
+            </Link>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-gray-800 hover:bg-white/40 backdrop-blur-sm font-medium"
-                asChild
-              >
-                <Link href="/contato" className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  Contato
-                </Link>
-              </Button>
-            </motion.div>
+          {/* Center Navigation - Main Links */}
+          <div className="hidden lg:flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-8">
+              <NavButton href="/about" icon={Users}>Sobre Nós</NavButton>
+              <NavButton href="/ecommerce" icon={ShoppingBag}>Produtos</NavButton>
+              <NavButton href="/contato" icon={Phone}>Contato</NavButton>
+            </div>
+          </div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
-                asChild
-              >
-                <Link href="/ecommerce" className="flex items-center gap-2">
-                  <Crown className="w-4 h-4" />
-                  Começar Agora
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-            </motion.div>
+          {/* Right Side - CTAs & Auth */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+            <NavButton href="/auth/login" icon={LogIn}>Entrar</NavButton>
+            <NavButton href="/auth/signup" icon={User} variant="default">Cadastrar</NavButton>
           </div>
 
           {/* Mobile Menu */}
@@ -291,13 +200,14 @@ export const PremiumNavigation = () => {
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent 
-                side="right" 
-                className="w-80 border-l border-white/40"
+              <SheetContent
+                side="right"
+                className="w-80 border-l border-white/50"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%)',
-                  backdropFilter: 'blur(25px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.90) 100%)',
+                  backdropFilter: 'blur(35px) saturate(200%) brightness(1.05)',
+                  WebkitBackdropFilter: 'blur(35px) saturate(200%) brightness(1.05)',
+                  boxShadow: '0 20px 60px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.7)',
                 }}
               >
                 <div className="flex flex-col h-full">
@@ -313,11 +223,6 @@ export const PremiumNavigation = () => {
                       <div key={section.title} className="space-y-3">
                         <div className="flex items-center gap-2">
                           <h3 className="font-semibold text-gray-900">{section.title}</h3>
-                          {section.badge && (
-                            <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0">
-                              {section.badge}
-                            </Badge>
-                          )}
                         </div>
                         <div className="space-y-1 pl-4">
                           {section.items?.map((item) => (
@@ -348,7 +253,7 @@ export const PremiumNavigation = () => {
                         Entrar em Contato
                       </Link>
                     </Button>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0" asChild>
+                    <Button className="w-full bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-900 hover:to-slate-800 text-white border-0" asChild>
                       <Link href="/ecommerce" className="flex items-center justify-center gap-2">
                         <Crown className="w-4 h-4" />
                         Começar Agora

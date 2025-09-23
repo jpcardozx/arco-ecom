@@ -2,9 +2,9 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Card, CardContent } from '@/components/design-system/primitives/card';
-import { Button } from '@/components/design-system/primitives/button';
-import { Badge } from '@/components/design-system/primitives/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Shield, UserCheck, LogIn } from 'lucide-react';
 
 // Check if user is approved affiliate (mock for now - replace with DB check)

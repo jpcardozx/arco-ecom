@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Lora } from 'next/font/google';
-import { PremiumNavigation } from '@/components/design-system/composed/PremiumNavigation';
+import { ProfessionalNavigation } from '@/design-system/components/navigation/ProfessionalNavigation';
 import { Providers } from './providers';
 import '../styles/globals.css';
 
@@ -36,9 +36,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17457190449"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17457190449');
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>
-          <PremiumNavigation />
+          <ProfessionalNavigation />
           <main className="pt-8">
             {children}
           </main>
