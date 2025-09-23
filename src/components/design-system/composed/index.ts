@@ -7,7 +7,6 @@
 export { Header } from './Header';
 export { MainLayout } from './MainLayout';
 export { Grid, GridItem } from './Grid';
-export { SimplifiedNavigation } from './SimplifiedNavigation';
 
 // Types
 export type { HeaderProps } from './Header';

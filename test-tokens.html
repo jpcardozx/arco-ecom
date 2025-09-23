@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste dos Design Tokens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554'
+                        },
+                        secondary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                            950: '#3b0764'
+                        },
+                        accent: {
+                            50: '#fffdf7',
+                            100: '#fffbeb',
+                            200: '#fef3c7',
+                            300: '#fde68a',
+                            400: '#fcd34d',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                            950: '#451a03'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <h1 class="text-3xl font-bold text-slate-900 text-center">Design Tokens - Teste</h1>
+        
+        <!-- Paleta de Cores -->
+        <div class="grid grid-cols-3 gap-6">
+            <div class="space-y-2">
+                <h2 class="text-lg font-semibold text-slate-800">Primary (Blues)</h2>
+                <div class="space-y-1">
+                    <div class="h-8 bg-primary-500 rounded flex items-center justify-center text-white text-sm">500</div>
+                    <div class="h-6 bg-primary-400 rounded flex items-center justify-center text-white text-xs">400</div>
+                    <div class="h-6 bg-primary-600 rounded flex items-center justify-center text-white text-xs">600</div>
+                </div>
+            </div>
+            
+            <div class="space-y-2">
+                <h2 class="text-lg font-semibold text-slate-800">Secondary (Purples)</h2>
+                <div class="space-y-1">
+                    <div class="h-8 bg-secondary-500 rounded flex items-center justify-center text-white text-sm">500</div>
+                    <div class="h-6 bg-secondary-400 rounded flex items-center justify-center text-white text-xs">400</div>
+                    <div class="h-6 bg-secondary-600 rounded flex items-center justify-center text-white text-xs">600</div>
+                </div>
+            </div>
+            
+            <div class="space-y-2">
+                <h2 class="text-lg font-semibold text-slate-800">Accent (Golds)</h2>
+                <div class="space-y-1">
+                    <div class="h-8 bg-accent-500 rounded flex items-center justify-center text-white text-sm">500</div>
+                    <div class="h-6 bg-accent-400 rounded flex items-center justify-center text-slate-900 text-xs">400</div>
+                    <div class="h-6 bg-accent-600 rounded flex items-center justify-center text-white text-xs">600</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards de Exemplo -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-3 h-3 bg-primary-500 rounded-full"></div>
+                    <h3 class="text-lg font-semibold text-slate-900">Card Primário</h3>
+                </div>
+                <p class="text-slate-600 mb-4">Exemplo de card usando cores primárias com sombra suave e bordas arredondadas.</p>
+                <button class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    Ação Primária
+                </button>
+            </div>
+
+            <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-xl p-6 shadow-lg border border-secondary-200">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-3 h-3 bg-secondary-500 rounded-full"></div>
+                    <h3 class="text-lg font-semibold text-slate-900">Card Secundário</h3>
+                </div>
+                <p class="text-slate-600 mb-4">Card com gradiente sutil usando a paleta secundária.</p>
+                <button class="bg-secondary-500 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    Ação Secundária
+                </button>
+            </div>
+        </div>
+
+        <!-- Glassmorphism Example -->
+        <div class="relative bg-gradient-to-r from-primary-400 to-secondary-400 rounded-2xl p-8 overflow-hidden">
+            <div class="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+            <div class="relative">
+                <h3 class="text-2xl font-bold text-white mb-2">Glassmorphism Effect</h3>
+                <p class="text-white/90">Exemplo de card com efeito de vidro e transparência.</p>
+            </div>
+        </div>
+
+        <div class="text-center text-sm text-slate-500 mt-8">
+            ✅ Design Tokens implementados com sucesso!
+        </div>
+    </div>
+</body>
+</html>

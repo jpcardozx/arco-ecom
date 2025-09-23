@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ARCO: Get Context",
+      "type": "shell",
+      "command": "npx tsx src/lib/context-tester.ts query \"${input:contextQuery}\"",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ARCO: Test Context System",
+      "type": "shell", 
+      "command": "npx tsx src/lib/context-tester.ts test",
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ARCO: Daily Planning",
+      "type": "shell",
+      "command": "npx tsx scripts/daily-planning.ts",
+      "group": "build", 
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "contextQuery",
+      "description": "What context do you need for ARCO?",
+      "type": "promptString"
+    }
+  ]
+}

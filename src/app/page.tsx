@@ -1,5 +1,5 @@
-import { CompleteLandingPage } from '@/components/business/layouts/CompleteLandingPage';
+import { ModernHomePage } from '@/components/modern/ModernHomePage';
 
 export default function HomePage() {
-    return <CompleteLandingPage />;
+    return <ModernHomePage />;
 }

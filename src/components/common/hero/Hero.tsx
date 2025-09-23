@@ -8,7 +8,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/design-system/primitives/button';
-import { Navigation } from '@/components/common/navigation/Navigation';
+import { UnifiedNavigation } from '@/components/common/navigation/UnifiedNavigationStier';
 import { cn } from '@/lib/utils';
 
 interface HeroAction {
@@ -46,10 +46,10 @@ export const Hero: React.FC<HeroProps> = ({
   children,
 }) => {
   const backgroundVariants = {
-    dark: 'bg-gray-900',
-    light: 'bg-white',
-    gradient: 'bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900',
-    'arco-dark': 'bg-[hsl(var(--arco-dark))]',
+    dark: 'bg-arco-midnight',
+    light: 'bg-arco-light',
+    gradient: 'bg-gradient-to-br from-arco-midnight via-arco-obsidian to-arco-steel',
+    'arco-dark': 'bg-arco-midnight',
   };
 
   const textColorVariants = {
@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <>
       {/* Navigation */}
-      {showNavigation && <Navigation variant="dark" />}
+      {showNavigation && <UnifiedNavigation />}
       
       <section
         className={cn(
@@ -89,13 +89,32 @@ export const Hero: React.FC<HeroProps> = ({
         </>
       )}
 
-      {/* Gradient mesh overlay for depth */}
-      <div className="absolute inset-0 gradient-mesh opacity-30" />
+      {/* Hero background with improved visibility */}
+      {backgroundImage ? (
+        <>
+          <Image
+            src={backgroundImage}
+            alt="Hero Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          {overlay && (
+            <div className="absolute inset-0 bg-gradient-to-br from-arco-midnight/80 via-arco-midnight/60 to-arco-midnight/80" />
+          )}
+        </>
+      ) : (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-br from-arco-san-marino via-arco-dark-blue to-arco-midnight" />
+          <div className="absolute inset-0 bg-texture-grid" />
+        </>
+      )}
 
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[hsl(var(--arco-san-marino))]/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-[hsl(var(--arco-dark-blue))]/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-arco-blue/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-arco-accent/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-arco-san-marino/10 rounded-full blur-xl animate-float" style={{ animationDelay: '4s' }} />
       </div>
 
       {/* Content */}
@@ -129,7 +148,9 @@ export const Hero: React.FC<HeroProps> = ({
               'mb-8 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl',
               textColorVariants[backgroundColor],
               'font-display drop-shadow-lg',
-              'bg-gradient-to-br from-white via-white to-white/80 bg-clip-text text-transparent'
+              backgroundColor === 'light'
+                ? 'text-arco-midnight'
+                : 'bg-gradient-to-br from-white via-white to-white/90 bg-clip-text text-transparent'
             )}
             style={{ textWrap: 'balance' } as React.CSSProperties}
           >
@@ -142,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({
               className={cn(
                 'mb-10 max-w-2xl text-lg leading-relaxed md:text-xl',
                 backgroundColor === 'light'
-                  ? 'text-gray-600'
+                  ? 'text-arco-gray'
                   : 'text-white/90 drop-shadow-sm',
                 'font-body'
               )}

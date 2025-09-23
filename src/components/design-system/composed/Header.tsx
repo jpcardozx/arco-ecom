@@ -6,7 +6,7 @@
 'use client';
 
 import React from 'react';
-import { ProfessionalNavigation } from '@/components/business/sections/ProfessionalNavigation';
+import { UnifiedNavigation } from '@/components/common/navigation/UnifiedNavigationStier';
 
 interface HeaderProps {
     variant?: 'default' | 'transparent' | 'solid';
@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
 
     return (
         <header className="relative">
-            <ProfessionalNavigation />
+            <UnifiedNavigation />
         </header>
     );
 };

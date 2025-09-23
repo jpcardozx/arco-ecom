@@ -18,7 +18,5 @@ export { TestimonialSection } from './TestimonialSection';
 
 // Specialized Components
 export { OptimizedClientStories } from './OptimizedClientStories';
-export { ProfessionalNavigation } from './ProfessionalNavigation';
 export { ROICalculator } from './ROICalculator';
-export { UnifiedHeroSection } from './UnifiedHeroSection';
 export { UnifiedValueProposition } from './UnifiedValueProposition';

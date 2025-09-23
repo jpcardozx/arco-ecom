@@ -6,7 +6,8 @@
 'use client';
 
 import React from 'react';
-import { SimplifiedNavigation } from './SimplifiedNavigation';
+import { UnifiedNavigation } from '@/components/common/navigation/UnifiedNavigationStier';
+import { Header } from './Header';
 import { Footer } from '@/components/common/footer/Footer';
 
 interface MainLayoutProps {
@@ -29,7 +30,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     return (
         <div className={`min-h-screen flex flex-col ${className}`}>
             {showHeader && (
-                <SimplifiedNavigation />
+                <UnifiedNavigation />
             )}
 
             <main className="flex-1">

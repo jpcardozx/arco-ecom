@@ -3,4 +3,4 @@
  */
 
 export { Navigation } from './Navigation';
-export { UnifiedNavigation } from './UnifiedNavigation';
+export { UnifiedNavigation } from './UnifiedNavigationStier';

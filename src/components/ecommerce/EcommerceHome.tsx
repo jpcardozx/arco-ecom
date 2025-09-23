@@ -30,9 +30,9 @@ import { cn } from '@/lib/utils';
 import { BUSINESS_IMAGES } from '@/lib/unsplash';
 import { ProductShowcase } from './ProductShowcase';
 import { AffiliateDashboard } from './dashboard/AffiliateDashboard';
-import { Footer } from '@/components/common/Footer';
-import Image from 'next/image';
-import Link from 'next/link';
+import { EcommerceHero } from './hero/EcommerceHero';
+import { Footer } from '@/components/common/footer/Footer';
+import { TrustSection } from './sections/TrustSection';
 
 interface QuickStat {
   label: string;
@@ -114,47 +114,10 @@ interface EcommerceHomeProps {
 export function EcommerceHome({ className }: EcommerceHomeProps) {
   return (
     <div className={cn("min-h-screen", className)}>
-      {/* Enhanced background with subtle texture and depth */}
-      <div className="fixed inset-0 bg-gradient-to-br from-background via-background to-muted/30 -z-10" />
-      <div 
-        className="fixed inset-0 opacity-[0.02] -z-10"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}
-      />
+      {/* S-Tier Hero Section */}
+      <EcommerceHero />
 
-      <div className="container mx-auto px-4 py-8 max-w-7xl space-y-12">
-        {/* Hero Section */}
-        <div className="text-center space-y-6 py-12">
-          <div className="space-y-4">
-            <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 text-base">
-              ✨ Shopping Premium Experience
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              Descubra os
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Melhores </span>
-              Produtos
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Curadoria especial dos melhores produtos com qualidade garantida. 
-              Ofertas exclusivas, entrega rápida e atendimento premium.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8 py-6 shadow-lg">
-              <ShoppingBag className="h-5 w-5 mr-2" />
-              Explorar Produtos
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-              <Link href="#showcase">
-                <Heart className="h-5 w-5 mr-2" />
-                Ver Favoritos
-              </Link>
-            </Button>
-          </div>
-        </div>
-
+      <div className="container mx-auto px-4 py-8 max-w-7xl space-y-4">
         {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickStats.map((stat, index) => (
@@ -277,7 +240,10 @@ export function EcommerceHome({ className }: EcommerceHomeProps) {
           </TabsContent>
         </Tabs>
       </div>
-      
+
+      {/* Trust Section */}
+      <TrustSection />
+
       {/* Professional Footer */}
       <Footer />
     </div>

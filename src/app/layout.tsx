@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Lora } from 'next/font/google';
-import { UnifiedNavigation } from '@/components/common/navigation/UnifiedNavigationStier';
+import { PremiumNavigation } from '@/components/design-system/composed/PremiumNavigation';
+import { Providers } from './providers';
 import '../styles/globals.css';
 
 const inter = Inter({
@@ -36,10 +37,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
-        <UnifiedNavigation />
-        <main className="pt-16">
-          {children}
-        </main>
+        <Providers>
+          <PremiumNavigation />
+          <main className="pt-8">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

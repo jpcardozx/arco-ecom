@@ -6,8 +6,8 @@
 'use client';
 
 import React from 'react';
-import { Navigation } from '@/components/common/navigation/Navigation';
 import { Hero } from '@/components/common/hero/Hero';
+import { TransformationProofSection } from '@/components/business/sections/TransformationProofSection';
 import { ServicesSection } from '@/components/business/sections/ServicesSection';
 import { ProcessSection } from '@/components/business/sections/ProcessSection';
 import { ResultsSection } from '@/components/business/sections/ResultsSection';
@@ -133,10 +133,11 @@ export const CompleteLandingPage: React.FC = () => {
         title="Convert Clicks into Real Appointments Today"
         subtitle="Marketing Optimization Experts"
         description="Maximize your marketing budget with ARCO's proven, data-driven strategies. We help local service businesses turn inquiries into confirmed appointments effortlessly."
-        backgroundImage={getUnsplashImage(BUSINESS_IMAGES.hero.marketing, { width: 1920, height: 1080 })}
+        backgroundImage="/hero-case-mosaic-2.png"
         backgroundColor="gradient"
         actions={heroActions}
         overlay
+        showNavigation={false}
       />
 
       {/* Stats Section */}
@@ -191,6 +192,9 @@ export const CompleteLandingPage: React.FC = () => {
         description="Our data-driven approach consistently delivers exceptional results for clients across industries."
         animated
       />
+
+      {/* Transformation Proof Section */}
+      <TransformationProofSection />
 
       {/* First Testimonial */}
       <TestimonialSection
