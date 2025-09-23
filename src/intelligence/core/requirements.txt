@@ -1,0 +1,30 @@
+# ARCO Intelligence System - High Performance Analytics
+# Eficiência computacional e análise madura sem overengineering
+
+# Core Analysis
+pandas>=2.1.0          # Análise de dados estruturados
+numpy>=1.24.0           # Operações matemáticas otimizadas
+scipy>=1.11.0           # Análise estatística avançada
+
+# Text & Document Analysis
+textstat>=0.7.3         # Métricas de qualidade de texto
+markdown>=3.5.0         # Parser de documentação MD
+beautifulsoup4>=4.12.0  # Análise de estrutura HTML
+
+# Performance & Quality Metrics
+radon>=6.0.1            # Complexidade de código
+bandit>=1.7.5           # Análise de segurança
+pylint>=3.0.0           # Qualidade de código
+
+# Data Visualization
+matplotlib>=3.7.0       # Gráficos básicos
+seaborn>=0.13.0         # Visualizações estatísticas
+
+# Business Intelligence
+scikit-learn>=1.3.0     # Machine learning para scoring
+networkx>=3.1.0         # Análise de dependências
+
+# File & System Operations
+pathlib2>=2.3.7        # Operações de arquivo otimizadas
+click>=8.1.0            # CLI interface
+rich>=13.0.0            # Output formatado

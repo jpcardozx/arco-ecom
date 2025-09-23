@@ -1,0 +1,148 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": [
+      "node"
+    ],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "jsxImportSource": "react",
+    "assumeChangesOnlyAffectDirectDependencies": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@arco/acquisition/*": [
+        "./src/components/acquisition/*"
+      ],
+      "@arco/analytics/*": [
+        "./src/components/analytics/*"
+      ],
+      "@arco/assessment/*": [
+        "./src/components/assessment/*"
+      ],
+      "@arco/client/*": [
+        "./src/components/client/*"
+      ],
+      "@arco/examples/*": [
+        "./src/components/examples/*"
+      ],
+      "@arco/form/*": [
+        "./src/components/form/*"
+      ],
+      "@arco/layout/*": [
+        "./src/components/layout/*"
+      ],
+      "@arco/pages/*": [
+        "./src/components/pages/*"
+      ],
+      "@arco/partners/*": [
+        "./src/components/partners/*"
+      ],
+      "@arco/performance/*": [
+        "./src/components/performance/*"
+      ],
+      "@arco/providers/*": [
+        "./src/components/providers/*"
+      ],
+      "@arco/sections/*": [
+        "./src/components/sections/*"
+      ],
+      "@arco/structure/*": [
+        "./src/components/structure/*"
+      ],
+      "@arco/system/*": [
+        "./src/components/system/*"
+      ],
+      "@arco/ui/*": [
+        "./src/components/ui/*"
+      ],
+      "@arco/config/*": [
+        "./src/config/*"
+      ],
+      "@arco/contexts/*": [
+        "./src/contexts/*"
+      ],
+      "@arco/design-system/*": [
+        "./src/design-system/*"
+      ],
+      "@arco/hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@arco/lib/*": [
+        "./src/lib/*"
+      ],
+      "@arco/mcp/*": [
+        "./src/mcp/*"
+      ],
+      "@arco/modules/*": [
+        "./src/modules/*"
+      ],
+      "@arco/services/*": [
+        "./src/services/*"
+      ],
+      "@arco/stories/*": [
+        "./src/stories/*"
+      ],
+      "@arco/styles/*": [
+        "./src/styles/*"
+      ],
+      "@arco/tokens/*": [
+        "./src/tokens/*"
+      ],
+      "@arco/types/*": [
+        "./src/types/*"
+      ],
+      "@arco/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/ui": [
+        "./src/ui/index.ts"
+      ],
+      "@/ui/*": [
+        "./src/ui/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "build/types/**/*.ts",
+    "next-env.d.ts",
+    "src/types/**/*.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "backup-old-components",
+    "maintenance/archive/**/*",
+    "docs/deprecated/**/*",
+    "mcp/**/*"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "jsx": "react-jsx"
+    }
+  }
+}

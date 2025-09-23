@@ -1,0 +1,94 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="strategyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#354C7A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#436099;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <rect width="800" height="600" fill="url(#strategyBg)"/>
+  
+  <!-- Subtle texture -->
+  <defs>
+    <pattern id="noise" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.5" fill="rgba(255,255,255,0.03)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#noise)"/>
+  
+  <!-- Strategy flowchart -->
+  <g transform="translate(50, 50)">
+    <!-- Main flow -->
+    <g transform="translate(0, 100)">
+      <!-- Research box -->
+      <rect x="0" y="0" width="120" height="80" fill="rgba(255,255,255,0.15)" rx="12" stroke="rgba(255,255,255,0.3)"/>
+      <text x="60" y="35" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">Research</text>
+      <text x="60" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">Market Analysis</text>
+      
+      <!-- Arrow -->
+      <path d="M 130 40 L 170 40" stroke="rgba(255,255,255,0.6)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      
+      <!-- Strategy box -->
+      <rect x="180" y="0" width="120" height="80" fill="rgba(255,255,255,0.15)" rx="12" stroke="rgba(255,255,255,0.3)"/>
+      <text x="240" y="35" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">Strategy</text>
+      <text x="240" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">Development</text>
+      
+      <!-- Arrow -->
+      <path d="M 310 40 L 350 40" stroke="rgba(255,255,255,0.6)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      
+      <!-- Implementation box -->
+      <rect x="360" y="0" width="120" height="80" fill="rgba(255,255,255,0.15)" rx="12" stroke="rgba(255,255,255,0.3)"/>
+      <text x="420" y="35" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">Implementation</text>
+      <text x="420" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">Execution</text>
+      
+      <!-- Arrow -->
+      <path d="M 490 40 L 530 40" stroke="rgba(255,255,255,0.6)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      
+      <!-- Results box -->
+      <rect x="540" y="0" width="120" height="80" fill="rgba(255,255,255,0.2)" rx="12" stroke="rgba(255,255,255,0.4)"/>
+      <text x="600" y="35" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">Results</text>
+      <text x="600" y="50" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">Optimization</text>
+    </g>
+    
+    <!-- Supporting elements -->
+    <g transform="translate(100, 250)">
+      <!-- KPI circles -->
+      <circle cx="100" cy="50" r="30" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)"/>
+      <text x="100" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">ROI</text>
+      <text x="100" y="58" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="8">+250%</text>
+      
+      <circle cx="250" cy="50" r="30" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)"/>
+      <text x="250" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">Leads</text>
+      <text x="250" y="58" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="8">+180%</text>
+      
+      <circle cx="400" cy="50" r="30" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)"/>
+      <text x="400" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">Sales</text>
+      <text x="400" y="58" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="8">+320%</text>
+    </g>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255,255,255,0.6)"/>
+    </marker>
+  </defs>
+  
+  <!-- Background elements -->
+  <circle cx="700" cy="100" r="50" fill="url(#glow)" opacity="0.3">
+    <animate attributeName="r" values="50;60;50" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="100" cy="500" r="40" fill="url(#glow)" opacity="0.2">
+    <animate attributeName="r" values="40;50;40" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Title -->
+  <text x="400" y="580" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="14" font-weight="600">
+    Marketing Strategy Framework
+  </text>
+</svg>
