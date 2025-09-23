@@ -1,6 +1,7 @@
 /**
  * ARCO Supabase Client Configuration
  * Complete setup with products management, authentication and image storage
+ * Works in harmony with MongoDB - Supabase handles images, MongoDB handles product data
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -8,13 +9,11 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Validate Supabase credentials
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('⚠️ Supabase URL and Anon Key are required. Check your .env.local file.');
-}
-
-// Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase client with fallback handling
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseAnonKey || 'placeholder-key'
+);
 
 // Product Types
 export interface Product {
@@ -225,13 +224,22 @@ export const linkParserService = {
   }
 };
 
-// Image Storage Service
+// Image Storage Service - Operates in harmony with MongoDB
 export const imageStorageService = {
   /**
    * Upload image to Supabase storage
    */
   async uploadImage(file: File | Blob, path: string): Promise<{ url: string; path: string }> {
-    if (!supabase) throw new Error('Supabase not initialized');
+    // Check if we have valid credentials
+    const hasCredentials = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    
+    if (!hasCredentials) {
+      console.warn('⚠️ Supabase credentials not found, using original file path');
+      return {
+        url: path,
+        path: path
+      };
+    }
     
     const { data, error } = await supabase.storage
       .from('product-images')
@@ -241,7 +249,11 @@ export const imageStorageService = {
       });
 
     if (error) {
-      throw new Error(`Image upload failed: ${error.message}`);
+      console.error('Image upload failed:', error.message);
+      return {
+        url: path,
+        path: path
+      };
     }
 
     const { data: { publicUrl } } = supabase.storage
@@ -258,6 +270,13 @@ export const imageStorageService = {
    * Upload image from URL (for scraped images)
    */
   async uploadImageFromUrl(imageUrl: string, fileName: string): Promise<{ url: string; path: string }> {
+    const hasCredentials = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    
+    if (!hasCredentials) {
+      console.warn('⚠️ Supabase credentials not found, keeping original URL');
+      return { url: imageUrl, path: imageUrl };
+    }
+
     try {
       // Fetch image
       const response = await fetch(imageUrl);
@@ -279,11 +298,20 @@ export const imageStorageService = {
    * Delete image from storage
    */
   async deleteImage(path: string): Promise<void> {
-    if (!supabase) return;
+    const hasCredentials = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     
-    await supabase.storage
-      .from('product-images')
-      .remove([path]);
+    if (!hasCredentials) {
+      console.warn('⚠️ Supabase credentials not found, cannot delete image');
+      return;
+    }
+    
+    try {
+      await supabase.storage
+        .from('product-images')
+        .remove([path]);
+    } catch (error) {
+      console.error('Image deletion failed:', error);
+    }
   },
 
   /**
