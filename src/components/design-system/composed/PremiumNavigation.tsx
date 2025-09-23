@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/design-system/primitives/button';
 import { Badge } from '@/components/design-system/primitives/badge';
 import {
@@ -24,58 +24,39 @@ import {
   Crown,
   ArrowRight,
   Phone,
-  Mail,
-  MapPin,
-  ChevronDown,
   Star,
-  Sparkles,
   X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// Logo Component - Clean, only logo
 const ArcoLogo = ({ className }: { className?: string }) => (
   <motion.div 
-    className={cn("flex items-center gap-3", className)}
-    whileHover={{ scale: 1.02 }}
+    className={cn("flex items-center", className)}
+    whileHover={{ scale: 1.05 }}
     transition={{ type: "spring", stiffness: 400, damping: 17 }}
   >
     <div className="relative group">
       <motion.div 
-        className="w-10 h-10 relative"
+        className="w-12 h-12 relative"
         whileHover={{ rotate: 5 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         <Image
           src="/logo-v2.svg"
-          alt="ARCO Logo"
-          width={40}
-          height={40}
+          alt="ARCO"
+          width={48}
+          height={48}
           className="object-contain"
           priority
         />
-        {/* Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-lg scale-150 opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10" />
       </motion.div>
-    </div>
-    <div className="flex flex-col">
-      <motion.span 
-        className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
-        initial={{ opacity: 0.8 }}
-        whileHover={{ opacity: 1 }}
-      >
-        ARCO
-      </motion.span>
-      <motion.span 
-        className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-        initial={{ opacity: 0.6 }}
-        whileHover={{ opacity: 0.8 }}
-      >
-        S-Tier Platform
-      </motion.span>
     </div>
   </motion.div>
 );
 
+// Navigation Items - Client Focused
 const navigationItems = [
   {
     title: 'Soluções',
@@ -116,66 +97,42 @@ const navigationItems = [
   },
   {
     title: 'E-commerce',
-    badge: 'S-Tier',
+    badge: 'Premium',
     items: [
       {
-        title: 'Shopping Center',
-        description: 'Produtos premium com curadoria especializada',
+        title: 'Loja Virtual Completa',
+        description: 'Plataforma e-commerce com IA integrada',
         href: '/ecommerce',
         icon: ShoppingBag,
-        color: 'from-indigo-500 to-blue-500',
+        color: 'from-emerald-500 to-teal-500',
         featured: true,
       },
       {
-        title: 'Programa de Afiliados',
-        description: 'Monetize sua audiência com comissões S-Tier',
-        href: '/ecommerce/affiliate/signup',
-        icon: Users,
-        color: 'from-violet-500 to-purple-500',
-        badge: 'Alta Conversão',
+        title: 'Automação de Vendas',
+        description: 'Funis automatizados que vendem 24/7',
+        href: '/ecommerce/automation',
+        icon: Zap,
+        color: 'from-blue-500 to-indigo-500',
+        featured: true,
       },
       {
-        title: 'Dashboard Analytics',
-        description: 'Métricas avançadas em tempo real',
-        href: '/ecommerce/affiliate/dashboard',
-        icon: Sparkles,
-        color: 'from-teal-500 to-cyan-500',
+        title: 'Analytics Avançado',
+        description: 'Dashboards inteligentes para otimização',
+        href: '/ecommerce/analytics',
+        icon: TrendingUp,
+        color: 'from-purple-500 to-pink-500',
+        badge: 'Pro',
+      },
+      {
+        title: 'Consultoria 1:1',
+        description: 'Estratégia personalizada para seu negócio',
+        href: '/ecommerce/consulting',
+        icon: Users,
+        color: 'from-amber-500 to-orange-500',
       },
     ],
   },
 ];
-
-interface NavigationLinkProps {
-  href: string;
-  title: string;
-  description?: string;
-  icon?: React.ComponentType<{ className?: string }>;
-}
-
-const NavigationLink = ({ href, title, description, icon: Icon }: NavigationLinkProps) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
-
-  return (
-    <Link href={href}>
-      <div className={cn(
-        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-        "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-        isActive && "bg-accent text-accent-foreground"
-      )}>
-        <div className="flex items-center gap-3">
-          {Icon && <Icon className="w-4 h-4" />}
-          <div className="text-sm font-medium leading-none">{title}</div>
-        </div>
-        {description && (
-          <p className="line-clamp-2 text-xs leading-snug text-muted-foreground ml-7">
-            {description}
-          </p>
-        )}
-      </div>
-    </Link>
-  );
-};
 
 export const PremiumNavigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -186,12 +143,11 @@ export const PremiumNavigation = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const NavItem = ({ item, isMainNav = false }: { item: any; isMainNav?: boolean }) => (
+  const NavItem = ({ item }: { item: any }) => (
     <motion.div
       className="group"
       whileHover={{ y: -2 }}
@@ -199,39 +155,26 @@ export const PremiumNavigation = () => {
     >
       <Link
         href={item.href}
-        className={cn(
-          "flex items-center gap-3 p-4 rounded-xl transition-all duration-300",
-          "hover:bg-gradient-to-r hover:shadow-lg hover:shadow-gray-200/50 dark:hover:shadow-gray-800/50",
-          item.featured && "border border-gray-200/50 dark:border-gray-700/50",
-          isMainNav ? "text-sm font-medium" : "text-base"
-        )}
-        style={{
-          background: item.featured 
-            ? `linear-gradient(135deg, transparent, ${item.color?.split(' ')[1] || 'rgba(59, 130, 246, 0.1)'})` 
-            : undefined
-        }}
+        className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:shadow-lg"
       >
         <div className={cn(
-          "p-2 rounded-lg transition-all duration-300 group-hover:scale-110",
-          `bg-gradient-to-br ${item.color || 'from-gray-500 to-gray-600'}`
+          "p-2 rounded-lg transition-all duration-300 group-hover:scale-110 bg-gradient-to-br",
+          item.color || 'from-gray-500 to-gray-600'
         )}>
           <item.icon className="w-4 h-4 text-white" />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
               {item.title}
             </h4>
             {item.badge && (
-              <Badge 
-                variant="secondary" 
-                className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0"
-              >
+              <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0">
                 {item.badge}
               </Badge>
             )}
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             {item.description}
           </p>
         </div>
@@ -242,69 +185,66 @@ export const PremiumNavigation = () => {
 
   return (
     <motion.header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled 
-          ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 shadow-sm" 
-          : "bg-transparent"
-      )}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      style={{
+        background: isScrolled 
+          ? 'linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.25) 100%)'
+          : 'linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%)',
+        backdropFilter: 'blur(30px) saturate(200%)',
+        WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+        borderBottom: '1px solid rgba(255,255,255,0.25)',
+        boxShadow: isScrolled ? '0 8px 32px rgba(0,0,0,0.12)' : '0 4px 16px rgba(0,0,0,0.08)',
+      }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - Clean and Simple */}
           <Link href="/" className="flex-shrink-0">
             <ArcoLogo />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-2">
             <NavigationMenu>
-              <NavigationMenuList className="gap-1">
+              <NavigationMenuList className="gap-2">
                 {navigationItems.map((section) => (
                   <NavigationMenuItem key={section.title}>
                     <NavigationMenuTrigger className={cn(
-                      "h-10 px-4 py-2 text-sm font-medium transition-all duration-300",
-                      "bg-transparent hover:bg-gray-100/80 dark:hover:bg-gray-800/80",
-                      "data-[active]:bg-gray-100 dark:data-[active]:bg-gray-800",
-                      "data-[state=open]:bg-gray-100/80 dark:data-[state=open]:bg-gray-800/80",
+                      "h-10 px-4 py-2 text-sm font-semibold transition-all duration-300",
+                      "bg-transparent hover:bg-white/40 text-gray-900 dark:text-white",
                       "border-0 focus:border-0 focus:ring-0"
                     )}>
                       <span className="flex items-center gap-2">
                         {section.title}
                         {section.badge && (
-                          <Badge 
-                            variant="outline" 
-                            className="text-xs px-1.5 py-0 border-blue-200 text-blue-600 dark:border-blue-800 dark:text-blue-400"
-                          >
+                          <Badge variant="outline" className="text-xs px-1.5 py-0 border-blue-400 text-blue-700 bg-white/70">
                             {section.badge}
                           </Badge>
                         )}
                       </span>
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="w-[500px]">
-                      <motion.div 
-                        className="p-6 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-800/50 rounded-xl shadow-xl"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="mb-4">
-                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                    <NavigationMenuContent 
+                      className="min-w-[400px] p-6 border border-white/40 shadow-2xl"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%)',
+                        backdropFilter: 'blur(25px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                      }}
+                    >
+                      <div className="grid gap-3">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+                          <h3 className="text-lg font-semibold text-gray-900">
                             {section.title}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Soluções premium para acelerar seus resultados
-                          </p>
                         </div>
-                        <div className="grid gap-3">
-                          {section.items.map((item) => (
-                            <NavItem key={item.title} item={item} />
-                          ))}
-                        </div>
-                      </motion.div>
+                        {section.items?.map((item) => (
+                          <NavItem key={item.title} item={item} />
+                        ))}
+                      </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 ))}
@@ -312,124 +252,111 @@ export const PremiumNavigation = () => {
             </NavigationMenu>
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 variant="ghost"
                 size="sm"
-                className="hidden sm:inline-flex hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="text-gray-800 hover:bg-white/40 backdrop-blur-sm font-medium"
                 asChild
               >
-                <Link href="/auth/signin">
-                  Login
-                </Link>
-              </Button>
-            </motion.div>
-            
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
-                asChild
-              >
-                <Link href="/ecommerce/affiliate/signup" className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  Começar Agora
+                <Link href="/contato" className="flex items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  Contato
                 </Link>
               </Button>
             </motion.div>
 
-            {/* Mobile Menu Button */}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
+                asChild
+              >
+                <Link href="/ecommerce" className="flex items-center gap-2">
+                  <Crown className="w-4 h-4" />
+                  Começar Agora
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Mobile Menu */}
+          <div className="lg:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="lg:hidden p-2"
-                >
+                <Button variant="ghost" size="sm" className="text-gray-900 hover:bg-white/40">
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent 
                 side="right" 
-                className="w-full sm:w-96 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-l border-gray-200/50 dark:border-gray-800/50"
+                className="w-80 border-l border-white/40"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%)',
+                  backdropFilter: 'blur(25px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                }}
               >
-                <motion.div 
-                  className="py-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between py-6 border-b border-gray-200/50">
                     <ArcoLogo />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="p-2"
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => setIsMobileMenuOpen(false)}>
                       <X className="w-5 h-5" />
                     </Button>
                   </div>
-                  
-                  <div className="space-y-6">
+
+                  <nav className="flex-1 py-6 space-y-6">
                     {navigationItems.map((section) => (
-                      <motion.div 
-                        key={section.title}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                          {section.title}
+                      <div key={section.title} className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold text-gray-900">{section.title}</h3>
                           {section.badge && (
-                            <Badge variant="outline" className="text-xs">
+                            <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0">
                               {section.badge}
                             </Badge>
                           )}
-                        </h3>
-                        <div className="space-y-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
-                          {section.items.map((item) => (
-                            <NavItem key={item.title} item={item} isMainNav />
+                        </div>
+                        <div className="space-y-1 pl-4">
+                          {section.items?.map((item) => (
+                            <Link
+                              key={item.title}
+                              href={item.href}
+                              className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/60 transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <div className={cn("p-1.5 rounded-md bg-gradient-to-br", item.color)}>
+                                <item.icon className="w-3 h-3 text-white" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="font-medium text-gray-900 text-sm">{item.title}</div>
+                                <div className="text-xs text-gray-600">{item.description}</div>
+                              </div>
+                            </Link>
                           ))}
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
-                  </div>
-                  
-                  <motion.div 
-                    className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-3"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <Button
-                      variant="outline"
-                      className="w-full justify-center"
-                      asChild
-                    >
-                      <Link href="/auth/signin">
-                        Login
+                  </nav>
+
+                  <div className="space-y-3 pt-6 border-t border-gray-200/50">
+                    <Button variant="outline" className="w-full bg-white/70 border-gray-300" asChild>
+                      <Link href="/contato" className="flex items-center justify-center gap-2">
+                        <Phone className="w-4 h-4" />
+                        Entrar em Contato
                       </Link>
                     </Button>
-                    <Button
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
-                      asChild
-                    >
-                      <Link href="/ecommerce/affiliate/signup" className="flex items-center justify-center gap-2">
-                        <Sparkles className="w-4 h-4" />
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0" asChild>
+                      <Link href="/ecommerce" className="flex items-center justify-center gap-2">
+                        <Crown className="w-4 h-4" />
                         Começar Agora
+                        <ArrowRight className="w-4 h-4" />
                       </Link>
                     </Button>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               </SheetContent>
             </Sheet>
           </div>
@@ -438,3 +365,5 @@ export const PremiumNavigation = () => {
     </motion.header>
   );
 };
+
+export default PremiumNavigation;
