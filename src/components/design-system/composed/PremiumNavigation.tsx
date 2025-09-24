@@ -19,45 +19,63 @@ import {
   Truck,
   Shield,
   User,
-  LogIn
+  LogIn,
+  BookOpen
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Logo Component - Simplified and Clean
+// Logo Component - Enhanced with proper size and animations
 const ArcoLogo = ({ className }: { className?: string }) => (
   <motion.div 
-    className={cn("relative group", className)}
-    whileHover={{ scale: 1.02 }}
+    className={cn("relative group py-3", className)}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
     transition={{ type: "spring", stiffness: 400, damping: 25 }}
   >
-    <Image
-      src="/logo-v2.svg"
-      alt="ARCO"
-      width={40}
-      height={40}
-      className="object-contain drop-shadow-sm"
-      priority
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative"
+    >
+      <Image
+        src="/logo-v2.svg"
+        alt="ARCO"
+        width={120}
+        height={48}
+        className="h-12 w-auto object-contain drop-shadow-sm transition-all duration-300 group-hover:drop-shadow-md"
+        priority
+      />
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+        initial={{ scale: 0.8 }}
+        whileHover={{ scale: 1.2 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      />
+    </motion.div>
   </motion.div>
 );
 
-// Navigation Button Component - Eliminates Repetition
+// Navigation Button Component - Enhanced UX
 const NavButton = ({ href, children, icon: Icon, variant = "ghost" }: {
   href: string;
   children: React.ReactNode;
   icon: React.ComponentType<{ className?: string }>;
   variant?: "ghost" | "default";
 }) => (
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+  <motion.div 
+    whileHover={{ scale: 1.02, y: -1 }} 
+    whileTap={{ scale: 0.98 }}
+    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+  >
     <Button
       variant={variant}
       size="sm"
       className={cn(
-        "font-semibold text-lg px-6 py-3 h-12 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg",
+        "font-medium text-base px-5 py-2.5 h-11 rounded-full transition-all duration-300 hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm",
         variant === "ghost" 
-          ? "text-gray-900 hover:bg-white/50 backdrop-blur-sm"
-          : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-xl hover:shadow-blue-500/30"
+          ? "text-gray-800 hover:bg-white/60 hover:text-gray-900 border border-transparent hover:border-white/30"
+          : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-blue-500/25"
       )}
       asChild
     >
@@ -96,6 +114,34 @@ const navigationItems = [
         href: '/ecommerce/populares',
         icon: TrendingUp,
         color: 'from-slate-600 to-slate-500',
+      },
+    ],
+  },
+  {
+    title: 'Conteúdo',
+    items: [
+      {
+        title: 'Blog Editorial',
+        description: 'Artigos exclusivos, tendências e insights',
+        href: '/blog',
+        icon: BookOpen,
+        color: 'from-purple-500 to-violet-500',
+        featured: true,
+        badge: 'Premium',
+      },
+      {
+        title: 'Guias de Compra',
+        description: 'Dicas especializadas para suas decisões',
+        href: '/blog?category=guias',
+        icon: Star,
+        color: 'from-amber-500 to-orange-500',
+      },
+      {
+        title: 'Tendências',
+        description: 'O que está em alta no mercado',
+        href: '/blog?category=tendencias',
+        icon: TrendingUp,
+        color: 'from-rose-500 to-pink-500',
       },
     ],
   },
@@ -170,18 +216,19 @@ export const PremiumNavigation = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-20">
-          {/* Logo - Left Side */}
-          <div className="flex-shrink-0 mr-8">
-            <Link href="/">
+          {/* Logo - Left Side with enhanced spacing */}
+          <div className="flex-shrink-0 mr-10 py-2">
+            <Link href="/" className="block">
               <ArcoLogo />
             </Link>
           </div>
 
           {/* Center Navigation - Main Links */}
           <div className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-6">
               <NavButton href="/about" icon={Users}>Sobre Nós</NavButton>
               <NavButton href="/ecommerce" icon={ShoppingBag}>Produtos</NavButton>
+              <NavButton href="/ecommerce/affiliate/links" icon={TrendingUp}>Afiliados</NavButton>
               <NavButton href="/contato" icon={Phone}>Contato</NavButton>
             </div>
           </div>

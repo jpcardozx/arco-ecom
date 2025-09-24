@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, Lora } from 'next/font/google';
-import { ProfessionalNavigation } from '@/design-system/components/navigation/ProfessionalNavigation';
+import Script from 'next/script';
+import { PremiumNavigation } from '@/components/design-system/composed/PremiumNavigation';
+import ModernFooter from '@/components/common/footer/ModernFooter';
 import { Providers } from './providers';
 import '../styles/globals.css';
 
@@ -18,14 +20,43 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: 'ARCO - Marketing Optimization Experts',
-  description: 'Convert clicks into real appointments today. Maximize your marketing budget with ARCO\'s proven, data-driven strategies.',
-  keywords: ['marketing optimization', 'lead generation', 'appointment conversion', 'revenue growth'],
-  authors: [{ name: 'ARCO' }],
+  title: 'ARCO - E-commerce Premium e Marketplace Inteligente',
+  description: 'Descubra produtos premium selecionados com qualidade excepcional. E-commerce completo com ofertas exclusivas, entrega rápida e compra garantida.',
+  keywords: [
+    'e-commerce premium',
+    'marketplace online',
+    'produtos exclusivos',
+    'compra online segura',
+    'ofertas especiais',
+    'entrega rápida',
+    'produtos Apple',
+    'eletrônicos premium',
+    'afiliados',
+    'cashback'
+  ],
+  authors: [{ name: 'ARCO E-commerce' }],
   openGraph: {
-    title: 'ARCO - Marketing Optimization Experts',
-    description: 'Convert clicks into real appointments today',
+    title: 'ARCO - E-commerce Premium e Marketplace Inteligente',
+    description: 'Descubra produtos premium com qualidade excepcional. Ofertas exclusivas e entrega garantida.',
     type: 'website',
+    siteName: 'ARCO E-commerce',
+    locale: 'pt_BR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ARCO - E-commerce Premium',
+    description: 'Produtos premium com qualidade excepcional',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -37,7 +68,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable}`}>
       <head>
-        {/* Google tag (gtag.js) */}
+        {/* Google AdSense Meta Tag */}
+        <meta name="google-adsense-account" content="ca-pub-4988039912127225" />
+
+        {/* Google AdSense Script */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4988039912127225" crossOrigin="anonymous"></script>
+
+        {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17457190449"></script>
         <script
           dangerouslySetInnerHTML={{
@@ -46,16 +83,58 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'AW-17457190449');
+
+              // Google Ads conversion tracking
+              gtag('config', 'AW-17457190449/conversion_label_here');
             `,
+          }}
+        />
+
+        {/* Structured Data - Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "ARCO E-commerce",
+              "url": "https://arco-ecommerce.com",
+              "logo": "https://arco-ecommerce.com/logo.png",
+              "description": "E-commerce premium com produtos selecionados e qualidade excepcional",
+              "sameAs": [
+                "https://facebook.com/arco",
+                "https://instagram.com/arco",
+                "https://twitter.com/arco"
+              ]
+            })
+          }}
+        />
+
+        {/* Structured Data - Website */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "ARCO E-commerce",
+              "url": "https://arco-ecommerce.com",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://arco-ecommerce.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            })
           }}
         />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>
-          <ProfessionalNavigation />
+          <PremiumNavigation />
           <main className="pt-8">
             {children}
           </main>
+          <ModernFooter showNewsletter={true} className="mt-auto" />
         </Providers>
       </body>
     </html>

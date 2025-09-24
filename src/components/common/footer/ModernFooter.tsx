@@ -1,6 +1,6 @@
 /**
- * ARCO Modern Footer Component - S-tier UI/UX
- * Modern footer with glassmorphism and advanced animations
+ * ARCO Modern Footer Component - S-tier UI/UX Refined
+ * Polished footer with enhanced glassmorphism and improved navigation
  */
 
 'use client';
@@ -32,7 +32,9 @@ import {
   Sparkles,
   Users,
   TrendingUp,
-  Crown
+  Crown,
+  CheckCircle,
+  Globe
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -59,50 +61,47 @@ interface FooterProps {
 
 const footerSections: FooterSection[] = [
   {
-    title: 'Produtos',
-    icon: TrendingUp,
+    title: 'Marketplace',
+    icon: Crown,
     links: [
-      { label: 'Eletrônicos', href: '/ecommerce?categoria=eletronicos' },
-      { label: 'Casa & Jardim', href: '/ecommerce?categoria=casa' },
-      { label: 'Moda & Beleza', href: '/ecommerce?categoria=moda' },
-      { label: 'Esportes & Lazer', href: '/ecommerce?categoria=esportes' },
+      { label: 'Catálogo Premium', href: '/ecommerce' },
       { label: 'Ofertas Especiais', href: '/ecommerce?tab=ofertas', badge: 'Hot' },
-      { label: 'Ver Todos', href: '/ecommerce' }
+      { label: 'Lançamentos', href: '/ecommerce?tab=lancamentos' },
+      { label: 'Mais Vendidos', href: '/ecommerce?tab=bestsellers' },
+      { label: 'Avaliações', href: '/ecommerce?tab=reviews' }
     ]
   },
   {
-    title: 'E-commerce',
+    title: 'Categorias',
     icon: Sparkles,
     links: [
-      { label: 'Catálogo Completo', href: '/ecommerce' },
-      { label: 'Meus Favoritos', href: '/ecommerce?tab=favoritos' },
-      { label: 'Ofertas do Dia', href: '/ecommerce/ofertas', badge: 'Novo' },
-      { label: 'Produtos Premium', href: '/ecommerce/premium' },
-      { label: 'Links de Afiliado', href: '/ecommerce/affiliate/links' }
+      { label: 'Tecnologia', href: '/ecommerce?categoria=tecnologia' },
+      { label: 'Casa & Decoração', href: '/ecommerce?categoria=casa' },
+      { label: 'Moda & Acessórios', href: '/ecommerce?categoria=moda' },
+      { label: 'Saúde & Beleza', href: '/ecommerce?categoria=saude' },
+      { label: 'Esportes & Fitness', href: '/ecommerce?categoria=esportes' }
     ]
   },
   {
-    title: 'Recursos',
-    icon: Users,
+    title: 'Suporte',
+    icon: Shield,
     links: [
-      { label: 'Cases de Sucesso', href: '/cases' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Calculadora ROI', href: '/tools/roi-calculator' },
-      { label: 'Toolkit Gratuito', href: '/resources/toolkit' },
-      { label: 'Webinars', href: '/resources/webinars' },
-      { label: 'Downloads', href: '/resources/downloads' }
+      { label: 'Central de Ajuda', href: '/suporte' },
+      { label: 'Como Comprar', href: '/suporte/como-comprar' },
+      { label: 'Entrega & Frete', href: '/suporte/entrega' },
+      { label: 'Política de Troca', href: '/suporte/trocas' },
+      { label: 'Fale Conosco', href: '/contato' }
     ]
   },
   {
     title: 'Empresa',
-    icon: Crown,
+    icon: Users,
     links: [
-      { label: 'Sobre Nós', href: '/about' },
-      { label: 'Nossa Equipe', href: '/team' },
-      { label: 'Carreiras', href: '/careers' },
-      { label: 'Imprensa', href: '/press' },
-      { label: 'Parceiros', href: '/partners' },
-      { label: 'Contato', href: '/contact' }
+      { label: 'Sobre a ARCO', href: '/about' },
+      { label: 'Nossa História', href: '/about#historia' },
+      { label: 'Missão & Valores', href: '/about#missao' },
+      { label: 'Carreiras', href: '/carreiras', badge: 'Novo' },
+      { label: 'Contato', href: '/contato' }
     ]
   }
 ];
@@ -115,10 +114,10 @@ const socialLinks = [
 ];
 
 const trustBadges = [
-  { icon: Shield, text: 'Segurança SSL', color: 'from-green-500 to-emerald-500' },
-  { icon: Award, text: 'Certificado ISO', color: 'from-blue-500 to-cyan-500' },
-  { icon: Star, text: '4.9/5 Avaliação', color: 'from-yellow-500 to-orange-500' },
-  { icon: Zap, text: 'Suporte 24/7', color: 'from-purple-500 to-violet-500' }
+  { icon: Shield, text: 'Compra Segura', color: 'from-green-500 to-emerald-500' },
+  { icon: Award, text: 'Produtos Certificados', color: 'from-blue-500 to-cyan-500' },
+  { icon: Star, text: '4.9/5 Satisfação', color: 'from-yellow-500 to-orange-500' },
+  { icon: Globe, text: 'Entrega Nacional', color: 'from-purple-500 to-violet-500' }
 ];
 
 export const ModernFooter: React.FC<FooterProps> = ({
