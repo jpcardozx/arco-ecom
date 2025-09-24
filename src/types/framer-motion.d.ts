@@ -1,3 +1,4 @@
+
 // Custom type definition for framer-motion to expand its types
 import { UseInViewOptions } from "framer-motion";
 import React from "react";

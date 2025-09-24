@@ -11,17 +11,17 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { UserPlus, TrendingUp, DollarSign, Users } from 'lucide-react';
 
-export default function AffiliateSignupPage() {
+export default function BlogSignupPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-accent/5">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <Badge className="mb-4">Programa de Afiliados</Badge>
-            <h1 className="text-4xl font-bold mb-4">Torne-se um Afiliado ARCO</h1>
+            <Badge className="mb-4">Programa do Blog</Badge>
+            <h1 className="text-4xl font-bold mb-4">Torne-se um Colaborador do Blog ARCO</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Monetize sua audiência com produtos premium. Comissões até 50% e suporte completo.
+              Compartilhe conhecimento e crie conteúdo premium. Oportunidades exclusivas de colaboração.
             </p>
           </div>
 
@@ -141,7 +141,7 @@ export default function AffiliateSignupPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="experience">Experiência com afiliados</Label>
+                    <Label htmlFor="experience">Experiência com blog</Label>
                     <Textarea
                       id="experience"
                       placeholder="Conte sobre sua experiência promovendo produtos (opcional)"
@@ -153,7 +153,7 @@ export default function AffiliateSignupPage() {
                     <div className="flex items-center space-x-2">
                       <Checkbox id="terms" />
                       <Label htmlFor="terms" className="text-sm">
-                        Aceito os termos do programa de afiliados
+                        Aceito os termos do programa do blog
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">

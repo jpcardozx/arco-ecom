@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     'entrega rápida',
     'produtos Apple',
     'eletrônicos premium',
-    'afiliados',
+    'blog',
     'cashback'
   ],
   authors: [{ name: 'ARCO E-commerce' }],
@@ -68,6 +68,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable}`}>
       <head>
+        {/* Impact Site Verification */}
+        <meta name="impact-site-verification" content="0a23c89f-a538-4c19-9ad6-44dc7e560871" />
+
         {/* Google AdSense Meta Tag */}
         <meta name="google-adsense-account" content="ca-pub-4988039912127225" />
 

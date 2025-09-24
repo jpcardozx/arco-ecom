@@ -37,7 +37,7 @@ const benefits = [
 export default function SignInPage() {
   const handleGitHubSignIn = () => {
     signIn('github', {
-      callbackUrl: '/ecommerce/affiliate/dashboard',
+      callbackUrl: '/ecommerce/blog/dashboard',
       redirect: true
     });
   };
@@ -159,7 +159,7 @@ export default function SignInPage() {
                   Não tem uma conta?{' '}
                   <button
                     onClick={() => signIn('github', {
-                      callbackUrl: '/ecommerce/affiliate/signup',
+                      callbackUrl: '/ecommerce/blog/signup',
                       redirect: true
                     })}
                     className="text-primary hover:underline font-medium"

@@ -228,7 +228,7 @@ export const PremiumNavigation = () => {
             <div className="flex items-center space-x-6">
               <NavButton href="/about" icon={Users}>Sobre Nós</NavButton>
               <NavButton href="/ecommerce" icon={ShoppingBag}>Produtos</NavButton>
-              <NavButton href="/ecommerce/affiliate/links" icon={TrendingUp}>Afiliados</NavButton>
+              <NavButton href="/blog" icon={TrendingUp}>Blog</NavButton>
               <NavButton href="/contato" icon={Phone}>Contato</NavButton>
             </div>
           </div>

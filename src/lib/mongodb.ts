@@ -93,19 +93,6 @@ export interface User {
   last_login_at?: Date;
 }
 
-// AuditLog interface for MongoDB
-export interface AuditLog {
-  _id?: string;
-  timestamp: Date;
-  userId: string;
-  userName: string;
-  action: string;
-  targetId: string;
-  targetType: string;
-  changes?: any;
-}
-
-
 // MongoDB service class
 export class MongoDBService {
   private db: Db | null = null;
@@ -130,10 +117,22 @@ export class MongoDBService {
     return db.collection<User>('users');
   }
 
-  // Audit Logs collection
-  async getAuditLogsCollection(): Promise<Collection<AuditLog>> {
+  // Audit logs collection
+  async getAuditLogsCollection(): Promise<Collection<any>> {
     const db = await this.getDb();
-    return db.collection<AuditLog>('audit_logs');
+    return db.collection('audit_logs');
+  }
+
+  // Get user by email
+  async getUserByEmail(email: string): Promise<User | null> {
+    try {
+      const collection = await this.getUsersCollection();
+      // Ensure we are searching by email
+      return await collection.findOne({ email });
+    } catch (error) {
+      console.error('Error getting user by email:', error);
+      return null;
+    }
   }
 
   // Get all products with filtering
@@ -325,15 +324,6 @@ export class MongoDBService {
   }
 
   // User management methods
-  async getUserByEmail(email: string): Promise<User | null> {
-    try {
-      const collection = await this.getUsersCollection();
-      return await collection.findOne({ email });
-    } catch (error) {
-      console.error('Error getting user by email:', error);
-      return null;
-    }
-  }
 
   async getUserById(id: string): Promise<User | null> {
     try {
@@ -398,7 +388,6 @@ export class MongoDBService {
     try {
       const productsCollection = await this.getProductsCollection();
       const usersCollection = await this.getUsersCollection();
-      const auditLogsCollection = await this.getAuditLogsCollection();
 
       // Product indexes
       await productsCollection.createIndex({ id: 1 }, { unique: true });
@@ -414,12 +403,6 @@ export class MongoDBService {
       // User indexes
       await usersCollection.createIndex({ id: 1 }, { unique: true });
       await usersCollection.createIndex({ email: 1 }, { unique: true });
-
-      // Audit Log indexes
-      await auditLogsCollection.createIndex({ timestamp: -1 });
-      await auditLogsCollection.createIndex({ userId: 1 });
-      await auditLogsCollection.createIndex({ action: 1 });
-
 
       console.log('✅ MongoDB indexes created successfully');
     } catch (error) {

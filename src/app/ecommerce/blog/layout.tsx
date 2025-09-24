@@ -42,7 +42,7 @@ export default function AffiliateLayout({
             <div>
               <h2 className="text-2xl font-bold mb-2">Acesso Restrito</h2>
               <p className="text-muted-foreground">
-                Esta área é exclusiva para afiliados aprovados. Faça login para continuar.
+                Esta área é exclusiva para colaboradores do blog. Faça login para continuar.
               </p>
             </div>
             <div className="space-y-3">
@@ -56,9 +56,9 @@ export default function AffiliateLayout({
               <Button
                 variant="outline"
                 className="w-full"
-                onClick={() => router.push('/ecommerce/affiliate/signup')}
+                onClick={() => router.push('/ecommerce/blog/signup')}
               >
-                Tornar-se Afiliado
+                Tornar-se Colaborador
               </Button>
             </div>
           </CardContent>
@@ -78,7 +78,7 @@ export default function AffiliateLayout({
             <div>
               <h2 className="text-2xl font-bold mb-2">Aprovação Pendente</h2>
               <p className="text-muted-foreground">
-                Sua solicitação para se tornar afiliado está sendo analisada. Você receberá um email em até 24h.
+                Sua solicitação para colaborar no blog está sendo analisada. Você receberá um email em até 24h.
               </p>
             </div>
             <Badge variant="secondary" className="text-yellow-600 bg-yellow-100">

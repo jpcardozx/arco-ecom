@@ -21,10 +21,10 @@ import {
 } from 'lucide-react';
 
 const stats = [
-  { label: 'Comissões do Mês', value: 'R$ 2.847', change: '+23%', icon: DollarSign },
-  { label: 'Cliques Totais', value: '12.486', change: '+15%', icon: MousePointer },
-  { label: 'Conversões', value: '89', change: '+8%', icon: ShoppingCart },
-  { label: 'Taxa de Conversão', value: '7.1%', change: '+2.3%', icon: TrendingUp },
+  { label: 'Artigos Publicados', value: '47', change: '+5', icon: DollarSign },
+  { label: 'Visualizações Totais', value: '12.486', change: '+15%', icon: Eye },
+  { label: 'Comentários', value: '89', change: '+8%', icon: Users },
+  { label: 'Taxa de Engajamento', value: '7.1%', change: '+2.3%', icon: TrendingUp },
 ];
 
 const recentSales = [
